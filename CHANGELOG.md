@@ -1,5 +1,14 @@
 # Changelog
 
+## [1.0.2](https://github.com/climatepolicyradar/infra/compare/v1.0.1...v1.0.2) (2025-12-23)
+
+
+### Bug Fixes
+
+* add __init__ to components direcotry ([fc4ef1e](https://github.com/climatepolicyradar/infra/commit/fc4ef1e27efefefa8a549b9acd5d93b3788de755))
+* remove src. from import paths ([0c7b100](https://github.com/climatepolicyradar/infra/commit/0c7b10068ec1cd4cc010cd9c4ee5a767ba66e38c))
+* tidy up some pulumi experimental code ([0537aae](https://github.com/climatepolicyradar/infra/commit/0537aaeb7b61f696592fdcee8956bb022140aae6))
+
 ## [1.0.1](https://github.com/climatepolicyradar/infra/compare/v1.0.0...v1.0.1) (2025-12-23)
 
 
