@@ -1,5 +1,20 @@
 # Changelog
 
+## [1.0.1](https://github.com/climatepolicyradar/infra/compare/v1.0.0...v1.0.1) (2025-12-23)
+
+
+### Bug Fixes
+
+* add pull request workflow ([f15702b](https://github.com/climatepolicyradar/infra/commit/f15702bd88da40e5629909704e33a6e32ffe6023))
+* add pull request workflow ([1a0bc5e](https://github.com/climatepolicyradar/infra/commit/1a0bc5e6433faa18fc240dadb77a5f1d9f4bf8ed))
+* add pull request workflow ([1f6cff0](https://github.com/climatepolicyradar/infra/commit/1f6cff03b9fd9f395ff4ad258a6c303ab71b2b09))
+* add pull request workflow ([0f4b19f](https://github.com/climatepolicyradar/infra/commit/0f4b19f12de774784ddf18060fdf0d0d6a904589))
+* pull-request merge --auto ([ad93858](https://github.com/climatepolicyradar/infra/commit/ad938587bd54de34a40ec16df351141ed058d11e))
+* use INFRA_REPO_TOKEN ([5407ca7](https://github.com/climatepolicyradar/infra/commit/5407ca7776e023a282e39fca780182c8667a5a30))
+* use INFRA_REPO_TOKEN ([b6d18b3](https://github.com/climatepolicyradar/infra/commit/b6d18b3b6d84f4e9b1d54262b5dc557911d7e706))
+* workflow_dispatch on merge-to-main ([f7a88eb](https://github.com/climatepolicyradar/infra/commit/f7a88eb4b55cb8de1ae1a22c8e9e683fd4ea425e))
+* workflow_dispatch on merge-to-main ([bd652f4](https://github.com/climatepolicyradar/infra/commit/bd652f4740e48046176c661e66f981df4a00e094))
+
 ## 1.0.0 (2025-12-23)
 
 
