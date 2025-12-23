@@ -1,7 +1,7 @@
 import json
 
 import pulumi  # type: ignore
-from src.components.ecr_repository import ECRRepository
+from components.ecr_repository import ECRRepository
 from pulumi.provider.experimental.analyzer import Analyzer
 
 
