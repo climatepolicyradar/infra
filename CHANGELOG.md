@@ -1,5 +1,15 @@
 # Changelog
 
+## [1.0.1](https://github.com/climatepolicyradar/infra/compare/v1.0.0...v1.0.1) (2025-12-23)
+
+
+### Bug Fixes
+
+* add pull request workflow ([f15702b](https://github.com/climatepolicyradar/infra/commit/f15702bd88da40e5629909704e33a6e32ffe6023))
+* add pull request workflow ([1a0bc5e](https://github.com/climatepolicyradar/infra/commit/1a0bc5e6433faa18fc240dadb77a5f1d9f4bf8ed))
+* add pull request workflow ([1f6cff0](https://github.com/climatepolicyradar/infra/commit/1f6cff03b9fd9f395ff4ad258a6c303ab71b2b09))
+* add pull request workflow ([0f4b19f](https://github.com/climatepolicyradar/infra/commit/0f4b19f12de774784ddf18060fdf0d0d6a904589))
+
 ## 1.0.0 (2025-12-23)
 
 
