@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.0.4](https://github.com/climatepolicyradar/infra/compare/v1.0.3...v1.0.4) (2026-01-02)
+
+
+### Bug Fixes
+
+* rename component pulumi name ([9d764f6](https://github.com/climatepolicyradar/infra/commit/9d764f6f4dab5d55aac7ab98b0399244f1054fdb))
+* rename component pulumi name ([a9d68df](https://github.com/climatepolicyradar/infra/commit/a9d68df8a357cd5a16ccba9db37799c071e87efd))
+
 ## [1.0.3](https://github.com/climatepolicyradar/infra/compare/v1.0.2...v1.0.3) (2026-01-02)
 
 
