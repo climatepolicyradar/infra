@@ -17,6 +17,7 @@ class Repository(pulumi.ComponentResource):
         args: RepositoryArgs = RepositoryArgs(),
         opts: pulumi.ResourceOptions | None = None,
         aws_ecr_repository_args: aws.ecr.RepositoryArgs | None = None,
+        # this is not typed as Pulumi has not typed it in their system
         aws_ecr_lifecycle_policy_policy: pulumi.Input[str] | None = None,
     ):
         super().__init__("components:aws/ecr/repository:Repository", name, None, opts)
@@ -43,9 +44,9 @@ class Repository(pulumi.ComponentResource):
                             "tagStatus": "any",
                             "countType": "sinceImagePushed",
                             "countUnit": "days",
-                            # Two weeks as this is the default retention period for logs and other resources
-                            # After 2 weeks, the code and other dependant systems would have been updated
-                            # And being able to rollback further might actually cause more issues
+                            # Two weeks is a general default retention period for logs and other resources.
+                            # After 2 weeks other dependant systems have often been updated to the point
+                            # beyond being able to rollback.
                             "countNumber": 14,
                         },
                         "action": {"type": "expire"},
