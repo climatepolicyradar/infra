@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.0.3](https://github.com/climatepolicyradar/infra/compare/v1.0.2...v1.0.3) (2026-01-02)
+
+
+### Bug Fixes
+
+* use pulumi package structure ([b7e3f5e](https://github.com/climatepolicyradar/infra/commit/b7e3f5eb2f22df3936804c7e06445b5e260788fd))
+* use pulumi package structure ([5c5a719](https://github.com/climatepolicyradar/infra/commit/5c5a719281755b5c4c2ed7116cfba57815eb0b23))
+
 ## [1.0.2](https://github.com/climatepolicyradar/infra/compare/v1.0.1...v1.0.2) (2025-12-23)
 
 
