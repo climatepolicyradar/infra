@@ -1,6 +1,6 @@
 [project]
-name = "infra-components"
-version = "1.0.0"
+name = "components"
+version = "1.0.3"
 description = "Reusable Pulumi components for Climate Policy Radar infrastructure"
 requires-python = ">=3.13,<3.14"
 dependencies = [
