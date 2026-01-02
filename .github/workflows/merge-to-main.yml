@@ -29,4 +29,5 @@ jobs:
       - uses: googleapis/release-please-action@v4
         with:
           token: ${{ secrets.INFRA_REPO_TOKEN }}
-          release-type: simple
+          release-type: python
+          package-name: components

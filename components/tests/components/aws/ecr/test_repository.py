@@ -1,13 +1,13 @@
 import json
 
-import pulumi  # type: ignore
-from components.ecr_repository import ECRRepository
+import pulumi
+import components
 from pulumi.provider.experimental.analyzer import Analyzer
 
 
 @pulumi.runtime.test
-def test_ecr_repository(pulumi_mocks):
-    component = ECRRepository("test")
+def test_repository(pulumi_mocks):
+    component = components.aws.ecr.Repository("test")
 
     def check_resources(_):
         resources = pulumi_mocks.resources
@@ -30,15 +30,15 @@ def test_ecr_repository(pulumi_mocks):
 
     # @see: https://www.pulumi.com/docs/iac/guides/testing/unit/#write-the-tests
     return pulumi.Output.all(
-        component.repository.id, component.lifecycle_policy.id
+        component.aws_ecr_repository.id, component.aws_ecr_lifecycle_policy.id
     ).apply(check_resources)
 
 
 def test_analyze_ecr_repository():
     analyzer = Analyzer(name="test")
     try:
-        analyzer.analyze_component(ECRRepository)
-        print(f"✓ {ECRRepository.__name__} is valid")
+        analyzer.analyze_component(components.aws.ecr.Repository)
+        print(f"✓ {components.aws.ecr.Repository.__name__} is valid")
     except Exception as e:
-        print(f"✗ {ECRRepository.__name__}: {e}")
+        print(f"✗ {components.aws.ecr.Repository.__name__}: {e}")
         raise
