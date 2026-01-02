@@ -19,7 +19,7 @@ class Repository(pulumi.ComponentResource):
         aws_ecr_repository_args: aws.ecr.RepositoryArgs | None = None,
         aws_ecr_lifecycle_policy_policy: pulumi.Input[str] | None = None,
     ):
-        super().__init__("cpr:aws:ecr:Repository", name, None, opts)
+        super().__init__("components:aws/ecr/repository:Repository", name, None, opts)
 
         """repository"""
         aws_ecr_repository_args = aws_ecr_repository_args or aws.ecr.RepositoryArgs(
