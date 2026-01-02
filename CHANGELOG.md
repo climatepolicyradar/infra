@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.0.5](https://github.com/climatepolicyradar/infra/compare/v1.0.4...v1.0.5) (2026-01-02)
+
+
+### Bug Fixes
+
+* change python version ([d7dd997](https://github.com/climatepolicyradar/infra/commit/d7dd9970c1e053febc3388fd08ec55dcbaf77e7a))
+* change python version ([57030c6](https://github.com/climatepolicyradar/infra/commit/57030c6c1e88502d1bfcc5328a7fb2016ec1c2dc))
+
 ## [1.0.4](https://github.com/climatepolicyradar/infra/compare/v1.0.3...v1.0.4) (2026-01-02)
 
 
