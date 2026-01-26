@@ -31,6 +31,7 @@ lint:
     - yamllint@1.38.0
 actions:
   enabled:
+    - uv-lock
     - trunk-announce
     - trunk-check-pre-push
     - trunk-fmt-pre-commit
