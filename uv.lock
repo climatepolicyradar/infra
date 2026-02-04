@@ -159,11 +159,15 @@ name = "infra-policy"
 version = "1.0.0"
 source = { editable = "policies" }
 dependencies = [
+    { name = "pulumi-aws" },
     { name = "pulumi-policy" },
 ]
 
 [package.metadata]
-requires-dist = [{ name = "pulumi-policy", specifier = ">=1.0.0" }]
+requires-dist = [
+    { name = "pulumi-aws", specifier = ">=6.0.0" },
+    { name = "pulumi-policy", specifier = ">=1.0.0" },
+]
 
 [[package]]
 name = "iniconfig"
