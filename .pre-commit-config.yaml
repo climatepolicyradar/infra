@@ -3,7 +3,7 @@
 # canonical tool list and versions.
 default_language_version:
   python: python3.12
-  node: "22.16.0"
+  node: 22.16.0
 
 repos:
   # --- pre-commit-hooks (mirrors trunk pre-commit-hooks@6.0.0) ---
@@ -19,7 +19,7 @@ repos:
       - id: check-yaml
       - id: debug-statements
       - id: detect-aws-credentials
-        args: ["--allow-missing-credentials"]
+        args: [--allow-missing-credentials]
       - id: end-of-file-fixer
       - id: trailing-whitespace
 
@@ -34,19 +34,19 @@ repos:
     rev: 7.0.0
     hooks:
       - id: isort
-        args: ["--settings-path", ".trunk/configs/.isort.cfg"]
+        args: [--settings-path .trunk/configs/.isort.cfg]
 
   - repo: https://github.com/astral-sh/ruff-pre-commit
     rev: v0.14.13
     hooks:
       - id: ruff
-        args: ["--config", ".trunk/configs/ruff.toml"]
+        args: [--config .trunk/configs/ruff.toml]
 
   - repo: https://github.com/PyCQA/bandit
     rev: 1.9.3
     hooks:
       - id: bandit
-        args: ["-c", ".trunk/configs/bandit.yaml"]
+        args: [-c .trunk/configs/bandit.yaml]
         additional_dependencies: ["bandit[toml]"]
 
   # --- General ---
@@ -54,19 +54,19 @@ repos:
     rev: v3.1.0
     hooks:
       - id: prettier
-        args: ["--config", ".trunk/configs/.prettierrc"]
+        args: [--config .trunk/configs/.prettierrc]
 
   - repo: https://github.com/igorshubovych/markdownlint-cli
     rev: v0.47.0
     hooks:
       - id: markdownlint
-        args: ["--config", ".trunk/configs/.markdownlint.yaml"]
+        args: [--config .trunk/configs/.markdownlint.yaml]
 
   - repo: https://github.com/adrienverge/yamllint
     rev: v1.38.0
     hooks:
       - id: yamllint
-        args: ["-c", ".trunk/configs/.yamllint.yaml"]
+        args: [-c .trunk/configs/.yamllint.yaml]
 
   # --- TOML, Actions, security ---
   # tamasfe/taplo has no .pre-commit-hooks.yaml; use ComPWA wrapper. Latest v0.9.3 (trunk: 0.10.0).
@@ -84,23 +84,20 @@ repos:
     rev: 3.2.497
     hooks:
       - id: checkov
-        args:
-          [
-            "--framework",
-            "terraform",
-            "--framework",
-            "cloudformation",
-            "--soft-fail",
+        args: [
+            --framework terraform
+            --framework cloudformation
+            --soft-fail,
           ]
 
   - repo: https://github.com/trufflesecurity/trufflehog
     rev: v3.92.5
     hooks:
       - id: trufflehog
-        args: ["--no-version-check"]
+        args: [--no-version-check]
 
   - repo: https://github.com/shellcheck-py/shellcheck-py
     rev: v0.9.0.6 # trunk: shellcheck@0.9.0 (repo tags are v0.9.0.x)
     hooks:
       - id: shellcheck
-        args: ["-S", "warning", "--shell=bash"]
+        args: [-S warning --shell=bash]
