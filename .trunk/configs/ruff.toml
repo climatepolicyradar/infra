@@ -1,5 +1,6 @@
 target-version = "py312"
 
+[lint]
 # Generic, formatter-friendly config.
 # https://docs.astral.sh/ruff/rules/#pydocstyle-d
 # https://docs.astral.sh/ruff/rules/#error-e
@@ -9,9 +10,5 @@ target-version = "py312"
 # https://docs.astral.sh/ruff/rules/#pylint-pl
 # https://docs.astral.sh/ruff/rules/#tryceratops-try
 select = ["D3", "E", "F", "TID252", "UP", "PL", "TRY400"]
-
 # Never enforce `E501` (line length violations). This should be handled by formatters.
 ignore = ["E501", "TRY003", "D213", "D415"]
-
-[lint]
-ignore-init-module-imports = true
