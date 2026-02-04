@@ -2,7 +2,7 @@
 name = "infra-policy"
 version = "1.0.0"
 requires-python = ">=3.12,<3.14"
-dependencies = ["pulumi-policy>=1.0.0"]
+dependencies = ["pulumi-policy>=1.0.0", "pulumi-aws>=6.0.0"]
 
 [build-system]
 requires = ["hatchling"]
