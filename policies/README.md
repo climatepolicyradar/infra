@@ -8,7 +8,7 @@ infrastructure resources.
 Install dependencies:
 
 ```bash
-cd policy
+cd policies
 uv sync
 ```
 
@@ -16,11 +16,20 @@ uv sync
 
 ### Running policies locally
 
-Test policies against a Pulumi program:
+Policy packs run as part of `pulumi preview`, not as a separate command.
 
-```bash
-pulumi policy preview --policy-pack . --policy-pack-config PulumiPolicy.yaml
-```
+1. Install the policy pack’s deps (from the repo that contains `policies/`):
+   `cd policies && uv sync`
+2. From a Pulumi project directory (e.g. `backend/` or `bootstrap/`), run:
+   `pulumi preview --policy-pack <path-to-policies-dir>`
+
+Use the path to the directory that contains `PulumiPolicy.yaml` and
+`__main__.py` (e.g. `../policies` or an absolute path). The analyzer runs that
+directory as the program and uses the Python/uv runtime defined in
+`PulumiPolicy.yaml`.
+
+Optional config for the pack (JSON; see Pulumi docs for format):
+`--policy-pack-config <path-to-config.json>`
 
 ### Publishing to Pulumi Cloud
 
@@ -43,12 +52,9 @@ specific stacks via Pulumi Cloud.
   property matching AWS naming conventions
 - **S3 Bucket naming**: Enforces that S3 buckets have a `bucket` property
   matching AWS naming conventions
-- **Lambda Function naming**: Enforces that Lambda functions have a `name`
-  property
-- **IAM Role naming**: Enforces that IAM roles have a `name` property
 - **Component resources**: Enforces that component resources have a name
 
 ## Adding New Policies
 
-Add new naming policies in `policies/name_enforcement.py` or create new policy
-files in the `policies/` directory and register them in `main.py`.
+Add new naming policies in `policies/policy/name_enforcement.py` or create new
+policy files in the `policy/` directory and register them in `main.py`.
