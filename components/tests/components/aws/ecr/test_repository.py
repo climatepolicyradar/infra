@@ -1,8 +1,8 @@
 import json
 
 import pulumi
-from components.components.aws.ecr.repository import Repository
-from components.components.aws.ecr.types import ResourceType
+from components.aws.ecr.repository import Repository
+from components.aws.ecr.types import ResourceType
 from pulumi.provider.experimental.analyzer import Analyzer
 
 
