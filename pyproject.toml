@@ -2,15 +2,10 @@
 name = "infra"
 version = "1.0.5"
 requires-python = ">=3.12,<3.14"
-dependencies = ["boto>=2.49.0", "pulumi>=3.213.0", "pulumi-aws>=6.83.2"]
+dependencies = []
 
 [dependency-groups]
-dev = [
-  "pre-commit>=4.5.1",
-  "pytest>=8.4.2",
-  "pytest-asyncio>=1.3.0",
-  "uv>=0.9.2",
-]
+dev = ["pre-commit>=4.5.1", "uv>=0.9.2"]
 
 [tool.uv.workspace]
 members = ["components"]
