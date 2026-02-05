@@ -60,13 +60,19 @@ source = { editable = "components" }
 
 [package.dev-dependencies]
 dev = [
+    { name = "pytest" },
+    { name = "pytest-asyncio" },
     { name = "typing-extensions" },
 ]
 
 [package.metadata]
 
 [package.metadata.requires-dev]
-dev = [{ name = "typing-extensions", specifier = ">=4.12" }]
+dev = [
+    { name = "pytest", specifier = ">=8.4.2" },
+    { name = "pytest-asyncio", specifier = ">=1.3.0" },
+    { name = "typing-extensions", specifier = ">=4.12" },
+]
 
 [[package]]
 name = "debugpy"
