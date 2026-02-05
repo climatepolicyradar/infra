@@ -2,21 +2,25 @@
 
 A shared set of infrastructure to used across the Policy Radar estate.
 
-We aim to [pave Golden Paths](https://www.pulumi.com/blog/golden-paths-infrastructure-components-and-templates/).
+We aim to
+[pave Golden Paths](https://www.pulumi.com/blog/golden-paths-infrastructure-components-and-templates/).
 
-### What Makes a Golden Path Golden?
+## What Makes a Golden Path Golden?
 
-Drawing from Spotify’s pioneering work, golden paths share these characteristics:
+Drawing from Spotify’s pioneering work, golden paths share these
+characteristics:
 
-- *Pre-architected and Supported:* The platform team owns and supports the path
-- *Optional but Recommended:* Developers can deviate, but staying on the path ensures support
-- *Transparent Abstractions:* The implementation is visible, not a black box
-- *Extensible:* Teams can add project-specific resources without breaking the pattern
-- *Evolutionary:* Templates improve based on feedback and new requirements
-
+- _Pre-architected and Supported:_ The platform team owns and supports the path
+- _Optional but Recommended:_ Developers can deviate, but staying on the path
+  ensures support
+- _Transparent Abstractions:_ The implementation is visible, not a black box
+- _Extensible:_ Teams can add project-specific resources without breaking the
+  pattern
+- _Evolutionary:_ Templates improve based on feedback and new requirements
 
 ## Release
 
-Releases are handled by [release-please](https://github.com/googleapis/release-please)
-via the [release-please-action](https://github.com/googleapis/release-please-action)
-in [release.yml](.github/workflows/release.yml).
+Releases are handled by
+[release-please](https://github.com/googleapis/release-please) via the
+[release-please-action](https://github.com/googleapis/release-please-action) in
+[release.yml](.github/workflows/release.yml).
