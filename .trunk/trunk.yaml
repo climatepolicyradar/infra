@@ -16,19 +16,45 @@ runtimes:
     - python@3.10.8
 # This is the section where you manage your linters. (https://docs.trunk.io/check/configuration)
 lint:
+  definitions:
+    - name: bandit
+      direct_configs: [bandit.yaml]
+      commands:
+        - name: lint
+          run: bandit --exit-zero -c bandit.yaml --format json --output ${tmpfile} ${target}
+
+  ignore:
+    - linters: [markdownlint]
+      paths:
+        - CHANGELOG.md
   enabled:
-    - actionlint@1.7.10
-    - bandit@1.9.3
-    - black@26.1.0
-    - checkov@3.2.497
-    - git-diff-check
-    - isort@7.0.0
-    - markdownlint@0.47.0
-    - prettier@3.8.1
-    - ruff@0.14.13
-    - taplo@0.10.0
-    - trufflehog@3.92.5
-    - yamllint@1.38.0
+    - actionlint@1.7.10 # GitHub Actions
+    - bandit@1.9.3 # Python security
+    - black@26.1.0 # Python formatting
+    - checkov@3.2.497 # Terraform security
+    - git-diff-check # Git diff check
+    - isort@7.0.0 # Python import sorting
+    - markdownlint@0.47.0 # Markdown linting & formatting
+    - pre-commit-hooks@6.0.0:
+        commands:
+          - check-ast
+          - check-case-conflict
+          - check-docstring-first
+          - check-json
+          - check-merge-conflict
+          - check-toml
+          - check-yaml
+          - debug-statements
+          - detect-aws-credentials --allow-missing-credentials
+          - end-of-file-fixer
+          - trailing-whitespace
+    - prettier@3.8.1 # Generic code formatter
+    - ruff@0.14.13 # Python linter
+    - shellcheck@0.9.0 # Shell script linter
+    - shfmt@3.6.0 # Shell script formatter
+    - taplo@0.10.0 # TOML formatter
+    - trufflehog@3.92.5 # Secret scanning
+    - yamllint@1.38.0 # YAML linting
 actions:
   enabled:
     - uv-lock

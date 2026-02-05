@@ -18,6 +18,21 @@ jobs:
       - run: gh pr merge ${{ github.event.pull_request.number }} --squash --auto
         env:
           GITHUB_TOKEN: ${{ secrets.INFRA_REPO_TOKEN }}
+
+  code-quality:
+    permissions:
+      # For trunk to post annotations
+      checks: write
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: astral-sh/setup-uv@v7
+      - run: uv sync --all-packages
+      - name: Trunk Check
+        uses: trunk-io/trunk-action@v1
+        with:
+          arguments: --ci
+
   test:
     runs-on: ubuntu-latest
     strategy:
