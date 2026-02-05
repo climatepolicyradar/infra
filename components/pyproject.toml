@@ -10,7 +10,7 @@ authors = [
 readme = "README.md"
 
 [dependency-groups]
-dev = ["typing-extensions>=4.12"]
+dev = ["pytest>=8.4.2", "pytest-asyncio>=1.3.0", "typing-extensions>=4.12"]
 
 [build-system]
 requires = ["hatchling"]
