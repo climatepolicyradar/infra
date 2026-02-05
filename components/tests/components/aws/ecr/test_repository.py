@@ -2,7 +2,6 @@ import json
 
 import pulumi
 from components.aws.ecr.repository import Repository
-from components.aws.ecr.types import ResourceType
 from pulumi.provider.experimental.analyzer import Analyzer
 
 
@@ -13,13 +12,13 @@ def test_repository(pulumi_mocks):
     def check_resources(_):
         resources = pulumi_mocks.resources
         aws_ecr_repository = [
-            r for r in resources if r.typ == ResourceType.ECR_REPOSITORY.value
+            r for r in resources if r.typ == "aws:ecr/repository:Repository"
         ]
         assert len(aws_ecr_repository) == 1
 
         # if not specified we should have a default `LifecyclePolicy`
         aws_ecr_lifecycle_policy = [
-            r for r in resources if r.typ == ResourceType.ECR_LIFECYCLE_POLICY.value
+            r for r in resources if r.typ == "aws:ecr/lifecyclePolicy:LifecyclePolicy"
         ]
         assert len(aws_ecr_lifecycle_policy) == 1
 
