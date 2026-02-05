@@ -1,13 +1,13 @@
 import json
 
 import pulumi
-import components
+from components.aws.ecr.repository import Repository
 from pulumi.provider.experimental.analyzer import Analyzer
 
 
 @pulumi.runtime.test
 def test_repository(pulumi_mocks):
-    component = components.aws.ecr.Repository("test")
+    component = Repository("test")
 
     def check_resources(_):
         resources = pulumi_mocks.resources
@@ -25,7 +25,8 @@ def test_repository(pulumi_mocks):
         # Check the retention policy is 14 days
         policy = json.loads(aws_ecr_lifecycle_policy[0].inputs["policy"])
         assert len(policy["rules"]) == 1
-        assert policy["rules"][0]["selection"]["countNumber"] == 14
+        expected_number_of_days = 14
+        assert policy["rules"][0]["selection"]["countNumber"] == expected_number_of_days
         assert policy["rules"][0]["selection"]["countUnit"] == "days"
 
     # @see: https://www.pulumi.com/docs/iac/guides/testing/unit/#write-the-tests
@@ -37,8 +38,8 @@ def test_repository(pulumi_mocks):
 def test_analyze_ecr_repository():
     analyzer = Analyzer(name="test")
     try:
-        analyzer.analyze_component(components.aws.ecr.Repository)
-        print(f"✓ {components.aws.ecr.Repository.__name__} is valid")
+        analyzer.analyze_component(Repository)
+        print(f"✓ {Repository.__name__} is valid")
     except Exception as e:
-        print(f"✗ {components.aws.ecr.Repository.__name__}: {e}")
+        print(f"✗ {Repository.__name__}: {e}")
         raise

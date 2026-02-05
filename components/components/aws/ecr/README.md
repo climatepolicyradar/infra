@@ -7,6 +7,7 @@
 If you are importing from a pulumi_aws.ecr.Repository
 
 e.g.
+
 ```python
 
 # Replace this with the below components
@@ -46,5 +47,3 @@ pulumi import \
 # Get it all up and stored in the state
 pulumi up
 ```
-
-

@@ -1,8 +1,8 @@
 import json
+from typing import TypedDict
 
 import pulumi
 import pulumi_aws as aws
-from typing import TypedDict
 
 
 # These are required by Pulumis package registry, so we just create empty ones
