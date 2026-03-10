@@ -43,7 +43,7 @@ class Repository(pulumi.ComponentResource):
                         "selection": {
                             "tagStatus": "any",
                             "countType": "imageCountMoreThan",
-                            # Keeping 50 images provides roughly 14 days of history based on maximum
+                            # Keeping 50 images provides roughly 14 days of history based on our busiest
                             # push frequencies (up to ~50 images pushed in a 14 day window).
                             "countNumber": 50,
                         },
