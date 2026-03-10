@@ -39,15 +39,13 @@ class Repository(pulumi.ComponentResource):
                 "rules": [
                     {
                         "rulePriority": 1,
-                        "description": "Expire images older than 14 days",
+                        "description": "Keep last 50 images",
                         "selection": {
                             "tagStatus": "any",
-                            "countType": "sinceImagePushed",
-                            "countUnit": "days",
-                            # Two weeks is a general default retention period for logs and other resources.
-                            # After 2 weeks other dependant systems have often been updated to the point
-                            # beyond being able to rollback.
-                            "countNumber": 14,
+                            "countType": "imageCountMoreThan",
+                            # Keeping 50 images provides roughly 14 days of history based on maximum
+                            # push frequencies (up to ~50 images pushed in a 14 day window).
+                            "countNumber": 50,
                         },
                         "action": {"type": "expire"},
                     }
