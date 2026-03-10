@@ -25,9 +25,11 @@ def test_repository(pulumi_mocks):
         # Check the retention policy is 14 days
         policy = json.loads(aws_ecr_lifecycle_policy[0].inputs["policy"])
         assert len(policy["rules"]) == 1
-        expected_number_of_days = 14
-        assert policy["rules"][0]["selection"]["countNumber"] == expected_number_of_days
-        assert policy["rules"][0]["selection"]["countUnit"] == "days"
+        expected_number_of_images = 50
+        assert policy["rules"][0]["selection"]["countType"] == "imageCountMoreThan"
+        assert (
+            policy["rules"][0]["selection"]["countNumber"] == expected_number_of_images
+        )
 
     # @see: https://www.pulumi.com/docs/iac/guides/testing/unit/#write-the-tests
     return pulumi.Output.all(
