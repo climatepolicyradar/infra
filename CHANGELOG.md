@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.7](https://github.com/climatepolicyradar/infra/compare/v1.0.6...v1.0.7) (2026-03-10)
+
+
+### Bug Fixes
+
+* update comment in repository ([61deb2c](https://github.com/climatepolicyradar/infra/commit/61deb2c570616925940f1c5b6e737e75aa91b41e))
+
 ## [1.0.6](https://github.com/climatepolicyradar/infra/compare/v1.0.5...v1.0.6) (2026-03-10)
 
 
