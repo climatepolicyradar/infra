@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.6](https://github.com/climatepolicyradar/infra/compare/v1.0.5...v1.0.6) (2026-03-10)
+
+
+### Bug Fixes
+
+* use imageCountMoreThan sinceImagePushed on aws ecr Repositories ([#24](https://github.com/climatepolicyradar/infra/issues/24)) ([d3a8f57](https://github.com/climatepolicyradar/infra/commit/d3a8f574481a1fc64fb5ae9a03a8b12047a3bd8c))
+
 ## [1.0.5](https://github.com/climatepolicyradar/infra/compare/v1.0.4...v1.0.5) (2026-01-02)
 
 ### Bug Fixes
