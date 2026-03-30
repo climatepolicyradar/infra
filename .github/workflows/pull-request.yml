@@ -49,3 +49,14 @@ jobs:
         working-directory: .
         run: uv sync --project ${{ matrix.working-directory }} --group dev
       - run: just test
+
+  dependabot:
+    name: Dependabot Auto-pilot
+    needs: [code-quality, test]
+    if: github.event_name == 'pull_request'
+    permissions:
+      pull-requests: write
+      contents: write
+    uses: climatepolicyradar/reusable-workflows/.github/workflows/dependabot-autopilot.yml@v23
+    with:
+      auto-approve: false
