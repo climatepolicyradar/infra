@@ -1,4 +1,4 @@
-from typing import List, Optional
+from typing import Optional
 
 import pulumi
 import pulumi_aws as aws
@@ -27,20 +27,19 @@ class Bucket(pulumi.ComponentResource):
     ) -> None:
         super().__init__("components:aws/s3/bucket:Bucket", name, None, opts)
 
-        # base args: if caller didn't supply any, start from an empty args object
+        # If caller didn't supply any base args, start from an empty args object
         bucket_args = aws_s3_bucket_args or aws.s3.BucketArgs()
 
-        # ----- apply opinionated defaults only if caller hasn't set them -----
+        # ----- Apply opinionated defaults only if caller hasn't set them -----
 
-        # default bucket name to pulumi logical name if not given
+        # Default bucket name to pulumi logical name if not given
         if bucket_args.bucket is None:
             bucket_args.bucket = name
 
-        # default: enable versioning
         if bucket_args.versioning is None:
             bucket_args.versioning = aws.s3.BucketVersioningArgs(enabled=True)
 
-        # default: sse s3-managed keys, bucket key enabled
+        # Enable SSE s3-managed keys, bucket key enabled
         if bucket_args.server_side_encryption_configuration is None:
             bucket_args.server_side_encryption_configuration = aws.s3.BucketServerSideEncryptionConfigurationArgs(
                 rule=aws.s3.BucketServerSideEncryptionConfigurationRuleArgs(
@@ -51,7 +50,7 @@ class Bucket(pulumi.ComponentResource):
                 )
             )
 
-        # lifecycle: either caller-supplied dicts or a sensible default
+        # Either caller-supplied lifecycle dicts or a sensible default
         if override_lifecycle_rules is not None:
             bucket_args.lifecycle_rules = [
                 aws.s3.BucketLifecycleRuleArgs(
@@ -75,8 +74,9 @@ class Bucket(pulumi.ComponentResource):
                 )
                 for lr in override_lifecycle_rules
             ]
-        elif bucket_args.lifecycle_rules is None:
-            # golden-path default: keep current versions, expire noncurrent after 90 days
+
+        else:
+            # Golden path default: keep current versions, expire noncurrent after 90 days
             bucket_args.lifecycle_rules = [
                 aws.s3.BucketLifecycleRuleArgs(
                     enabled=True,
@@ -87,7 +87,7 @@ class Bucket(pulumi.ComponentResource):
                 )
             ]
 
-        # ----- underlying aws bucket -----
+        # ----- Underlying aws bucket -----
         self.aws_s3_bucket = aws.s3.Bucket(
             name,
             args=bucket_args,
