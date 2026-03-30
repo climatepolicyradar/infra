@@ -51,7 +51,8 @@ def test_bucket_defaults(pulumi_mocks):
         nve = rule0.get("noncurrentVersionExpiration") or rule0.get(
             "noncurrent_version_expiration"
         )
-        assert nve["days"] == 90
+        expected_days = 90
+        assert nve["days"] == expected_days
 
     # force pulumi to actually instantiate the component
     return pulumi.Output.all(
@@ -66,12 +67,13 @@ def test_bucket_lifecycle_override(pulumi_mocks):
     lifecycle rule with the caller's rule, while keeping versioning + SSE
     enabled by the golden path.
     """
+    expected_days = 21
     lifecycle_override = [
         {
             "enabled": True,
             "id": "SQL-Dump-Retention-3weeks",
             "prefix": "dumps/",
-            "expiration": {"days": 21},
+            "expiration": {"days": expected_days},
         }
     ]
 
@@ -104,7 +106,7 @@ def test_bucket_lifecycle_override(pulumi_mocks):
         assert rule["prefix"] == "dumps/"
 
         expiration = rule.get("expiration") or rule.get("Expiration")
-        assert expiration["days"] == 21
+        assert expiration["days"] == expected_days
 
         # golden-path bits still present
         versioning = bucket.inputs.get("versioning") or bucket.inputs.get(
