@@ -1,4 +1,4 @@
-from typing import Optional, TypedDict
+from typing import TypedDict
 
 import pulumi
 import pulumi_aws as aws
@@ -33,9 +33,10 @@ class Bucket(pulumi.ComponentResource):
     def __init__(
         self,
         name: str,
-        aws_s3_bucket_args: Optional[aws.s3.BucketArgs] = None,
-        override_lifecycle_rules: Optional[list[dict]] = None,
-        opts: Optional[pulumi.ResourceOptions] = None,
+        args: BucketArgs = BucketArgs(),
+        aws_s3_bucket_args: aws.s3.BucketArgs | None = None,
+        override_lifecycle_rules: list[dict] | None = None,
+        opts: pulumi.ResourceOptions | None = None,
     ) -> None:
         super().__init__("components:aws/s3/bucket:Bucket", name, None, opts)
 
