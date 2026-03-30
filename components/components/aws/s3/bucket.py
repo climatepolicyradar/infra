@@ -1,7 +1,19 @@
-from typing import Optional
+from typing import Optional, TypedDict
 
 import pulumi
 import pulumi_aws as aws
+
+
+class BucketArgs(TypedDict):
+    """
+    Placeholder args type required by Pulumi's Analyzer.
+
+    Real configuration is passed via:
+    - aws_s3_bucket_args: strongly-typed BucketArgs
+    - override_lifecycle_rules: dict-based lifecycle overrides
+    """
+
+    pass
 
 
 class Bucket(pulumi.ComponentResource):
