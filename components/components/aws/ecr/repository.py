@@ -26,7 +26,6 @@ class Repository(pulumi.ComponentResource):
     ):
         super().__init__("components:aws/ecr/repository:Repository", name, None, opts)
 
-        # Repository
         aws_ecr_repository_args = aws_ecr_repository_args or aws.ecr.RepositoryArgs(
             name=name,
         )
@@ -37,7 +36,6 @@ class Repository(pulumi.ComponentResource):
             opts=pulumi.ResourceOptions(parent=self),
         )
 
-        # Lifecycle Policy
         aws_ecr_lifecycle_policy_policy = aws_ecr_lifecycle_policy_policy or json.dumps(
             {
                 "rules": [
