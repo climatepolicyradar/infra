@@ -5,29 +5,34 @@ import pulumi
 import pulumi_aws as aws
 
 
-class BucketArgs(TypedDict):
+class BucketArgs(TypedDict, total=False):
     """
-    Placeholder args type required by Pulumi's Analyzer.
+    Component input args, used by Pulumi's Analyzer.
 
-    Real configuration is passed via:
-    - args: strongly-typed aws.s3.BucketArgs
+    Fields:
+    - aws_s3_bucket_args: strongly-typed aws.s3.BucketArgs used to configure
+      the underlying bucket. This is where callers set tags, lifecycle_rules,
+      etc.
     """
 
-    pass
+    aws_s3_bucket_args: aws.s3.BucketArgs
 
 
 class Bucket(pulumi.ComponentResource):
     def __init__(
         self,
         name: str,
-        args: aws.s3.BucketArgs | None = None,
+        args: BucketArgs = BucketArgs(),
         opts: pulumi.ResourceOptions | None = None,
     ) -> None:
         super().__init__("components:aws/s3/bucket:Bucket", name, None, opts)
 
+        # extract underlying bucket args from the component args (a plain dict)
+        aws_s3_bucket_args = args.get("aws_s3_bucket_args")
+
         # defensive copy: don't mutate caller's args
-        if args is not None:
-            bucket_args = copy.deepcopy(args)
+        if aws_s3_bucket_args is not None:
+            bucket_args = copy.deepcopy(aws_s3_bucket_args)
         else:
             bucket_args = aws.s3.BucketArgs()
 
@@ -40,19 +45,16 @@ class Bucket(pulumi.ComponentResource):
             bucket_args.versioning = aws.s3.BucketVersioningArgs(enabled=True)
 
         if getattr(bucket_args, "server_side_encryption_configuration", None) is None:
-            bucket_args.server_side_encryption_configuration = (
-                aws.s3.BucketServerSideEncryptionConfigurationArgs(
-                    rule=aws.s3.BucketServerSideEncryptionConfigurationRuleArgs(
-                        apply_server_side_encryption_by_default=aws.s3.
-                        BucketServerSideEncryptionConfigurationRuleApplyServerSideEncryptionByDefaultArgs(
-                            sse_algorithm="AES256",
-                        ),
-                        bucket_key_enabled=True,
-                    )
+            bucket_args.server_side_encryption_configuration = aws.s3.BucketServerSideEncryptionConfigurationArgs(
+                rule=aws.s3.BucketServerSideEncryptionConfigurationRuleArgs(
+                    apply_server_side_encryption_by_default=aws.s3.BucketServerSideEncryptionConfigurationRuleApplyServerSideEncryptionByDefaultArgs(
+                        sse_algorithm="AES256",
+                    ),
+                    bucket_key_enabled=True,
                 )
             )
 
-        # ----- Default lifecycle rules -----
+        # ----- default lifecycle rules -----
         #
         # Most of our S3 buckets currently have no lifecycle rules, which is
         # expensive for versioned buckets. here we provide a sensible default:
@@ -83,9 +85,16 @@ class Bucket(pulumi.ComponentResource):
         #
         #       my_bucket = Bucket(
         #           "my-bucket",
-        #           args=aws.s3.BucketArgs(
-        #               lifecycle_rules=[],
-        #           ),
+        #           args={
+        #               "aws_s3_bucket_args": aws.s3.BucketArgs(
+        #                   lifecycle_rules=[
+        #                       aws.s3.BucketLifecycleRuleArgs(
+        #                           enabled=False,
+        #                           id="no-lifecycle-rules",
+        #                        )
+        #                   ],
+        #               )
+        #           },
         #       )
         #
         #   - to implement a different policy (e.g. "expire current objects
@@ -94,21 +103,23 @@ class Bucket(pulumi.ComponentResource):
         #
         #       my_bucket = Bucket(
         #           "my-bucket",
-        #           args=aws.s3.BucketArgs(
-        #               lifecycle_rules=[
-        #                   aws.s3.BucketLifecycleRuleArgs(
-        #                       enabled=True,
-        #                       id="expire-current-after-x-days",
-        #                       expiration=aws.s3.BucketLifecycleRuleExpirationArgs(
-        #                           days=30,  # delete current versions after 30 days
+        #           args={
+        #               "aws_s3_bucket_args": aws.s3.BucketArgs(
+        #                   lifecycle_rules=[
+        #                       aws.s3.BucketLifecycleRuleArgs(
+        #                           enabled=True,
+        #                           id="expire-current-after-x-days",
+        #                           expiration=aws.s3.BucketLifecycleRuleExpirationArgs(
+        #                               days=30,  # delete current versions after 30 days
+        #                           ),
+        #                           noncurrent_version_expiration=aws.s3.
+        #                           BucketLifecycleRuleNoncurrentVersionExpirationArgs(
+        #                               days=100,  # clean up noncurrent after 100 days
+        #                           ),
         #                       ),
-        #                       noncurrent_version_expiration=aws.s3.
-        #                       BucketLifecycleRuleNoncurrentVersionExpirationArgs(
-        #                           days=100,  # clean up noncurrent after 100 days
-        #                       ),
-        #                   ),
-        #               ],
-        #           ),
+        #                   ],
+        #               )
+        #           },
         #       )
         #
         if getattr(bucket_args, "lifecycle_rules", None) is None:
@@ -116,8 +127,7 @@ class Bucket(pulumi.ComponentResource):
                 aws.s3.BucketLifecycleRuleArgs(
                     enabled=True,
                     id="noncurrent-version-cleanup-90d",
-                    noncurrent_version_expiration=aws.s3.
-                    BucketLifecycleRuleNoncurrentVersionExpirationArgs(
+                    noncurrent_version_expiration=aws.s3.BucketLifecycleRuleNoncurrentVersionExpirationArgs(
                         days=90,
                     ),
                 )

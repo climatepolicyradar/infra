@@ -18,19 +18,16 @@ def test_bucket_defaults(pulumi_mocks):
     def check_resources(_):
         resources = pulumi_mocks.resources
 
-        # exactly one underlying s3 bucket
         aws_s3_buckets = [r for r in resources if r.typ == "aws:s3/bucket:Bucket"]
         assert len(aws_s3_buckets) == 1
 
         bucket = aws_s3_buckets[0]
 
-        # versioning enabled
         versioning = bucket.inputs.get("versioning") or bucket.inputs.get(
             "versioning", {}
         )
         assert versioning.get("enabled") is True
 
-        # sse: AES256 + bucket key
         sse_config = bucket.inputs.get(
             "serverSideEncryptionConfiguration"
         ) or bucket.inputs.get("server_side_encryption_configuration")
@@ -41,7 +38,6 @@ def test_bucket_defaults(pulumi_mocks):
         assert default_sse["sseAlgorithm"] == "AES256"
         assert rule.get("bucketKeyEnabled") is True
 
-        # lifecycle: one rule, noncurrent version expiration after 90 days
         lifecycle_rules = bucket.inputs.get("lifecycleRules") or bucket.inputs.get(
             "lifecycle_rules"
         )
@@ -54,36 +50,38 @@ def test_bucket_defaults(pulumi_mocks):
         expected_days = 90
         assert nve["days"] == expected_days
 
-    # force pulumi to actually instantiate the component
     return pulumi.Output.all(
         component.aws_s3_bucket.id,
     ).apply(check_resources)
 
 
 @pulumi.runtime.test
-def test_bucket_lifecycle_override(pulumi_mocks):
+def test_bucket_lifecycle_override_custom_rule(pulumi_mocks):
     """
-    when override_lifecycle_rules is provided, it should replace the default
-    lifecycle rule with the caller's rule, while keeping versioning + SSE
-    enabled by the golden path.
+    when the caller provides lifecycle_rules on BucketArgs, the component
+    should respect those rules and NOT apply the default 90 day noncurrent
+    cleanup rule, while keeping versioning + SSE enabled.
     """
     expected_days = 21
-    lifecycle_override = [
-        {
-            "enabled": True,
-            "id": "SQL-Dump-Retention-3weeks",
-            "prefix": "dumps/",
-            "expiration": {"days": expected_days},
-        }
-    ]
 
     component = Bucket(
         "test-rds-backups",
-        aws_s3_bucket_args=aws.s3.BucketArgs(
-            bucket="cpr-production-rds",
-            tags={"service": "rds-backups"},
-        ),
-        override_lifecycle_rules=lifecycle_override,
+        args={
+            "aws_s3_bucket_args": aws.s3.BucketArgs(
+                bucket="cpr-production-rds",
+                tags={"service": "rds-backups"},
+                lifecycle_rules=[
+                    aws.s3.BucketLifecycleRuleArgs(
+                        enabled=True,
+                        id="SQL-Dump-Retention-3weeks",
+                        prefix="dumps/",
+                        expiration=aws.s3.BucketLifecycleRuleExpirationArgs(
+                            days=expected_days,
+                        ),
+                    )
+                ],
+            )
+        },
     )
 
     def check_resources(_):
@@ -94,7 +92,6 @@ def test_bucket_lifecycle_override(pulumi_mocks):
 
         bucket = aws_s3_buckets[0]
 
-        # lifecycle rules should match our override, not the default
         lifecycle_rules = bucket.inputs.get("lifecycleRules") or bucket.inputs.get(
             "lifecycle_rules"
         )
@@ -108,7 +105,11 @@ def test_bucket_lifecycle_override(pulumi_mocks):
         expiration = rule.get("expiration") or rule.get("Expiration")
         assert expiration["days"] == expected_days
 
-        # golden-path bits still present
+        nve = rule.get("noncurrentVersionExpiration") or rule.get(
+            "noncurrent_version_expiration"
+        )
+        assert nve is None
+
         versioning = bucket.inputs.get("versioning") or bucket.inputs.get(
             "versioning", {}
         )
@@ -117,10 +118,63 @@ def test_bucket_lifecycle_override(pulumi_mocks):
         sse_config = bucket.inputs.get(
             "serverSideEncryptionConfiguration"
         ) or bucket.inputs.get("server_side_encryption_configuration")
+        assert sse_config is not None
+
         rule_sse = sse_config["rule"]
         default_sse = rule_sse["applyServerSideEncryptionByDefault"]
         assert default_sse["sseAlgorithm"] == "AES256"
         assert rule_sse.get("bucketKeyEnabled") is True
+
+    return pulumi.Output.all(
+        component.aws_s3_bucket.id,
+    ).apply(check_resources)
+
+
+@pulumi.runtime.test
+def test_bucket_lifecycle_override_disable_rules(pulumi_mocks):
+    """
+    when the caller explicitly disables lifecycle rules (enabled=False),
+    the component should not add its own default rule and should preserve
+    the disabled rule as-is.
+    """
+    component = Bucket(
+        "test-disable-lifecycle",
+        args={
+            "aws_s3_bucket_args": aws.s3.BucketArgs(
+                bucket="no-lifecycle-bucket",
+                lifecycle_rules=[
+                    aws.s3.BucketLifecycleRuleArgs(
+                        enabled=False,
+                        id="no-lifecycle",
+                    )
+                ],
+            )
+        },
+    )
+
+    def check_resources(_):
+        resources = pulumi_mocks.resources
+
+        aws_s3_buckets = [r for r in resources if r.typ == "aws:s3/bucket:Bucket"]
+        assert len(aws_s3_buckets) == 1
+
+        bucket = aws_s3_buckets[0]
+
+        lifecycle_rules = bucket.inputs.get("lifecycleRules") or bucket.inputs.get(
+            "lifecycle_rules"
+        )
+        assert lifecycle_rules is not None
+        assert len(lifecycle_rules) == 1
+
+        rule = lifecycle_rules[0]
+        assert rule["id"] == "no-lifecycle"
+        assert rule["enabled"] is False or rule["enabled"] == "False"
+
+        assert (
+            rule.get("noncurrentVersionExpiration")
+            or rule.get("noncurrent_version_expiration")
+        ) is None
+        assert rule.get("expiration") is None
 
     return pulumi.Output.all(
         component.aws_s3_bucket.id,
