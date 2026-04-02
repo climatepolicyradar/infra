@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.0](https://github.com/climatepolicyradar/infra/compare/v1.0.7...v1.1.0) (2026-04-02)
+
+
+### Features
+
+* **deps:** bump actions/checkout from 5 to 6 ([#28](https://github.com/climatepolicyradar/infra/issues/28)) ([11c0d12](https://github.com/climatepolicyradar/infra/commit/11c0d12804285fe4d0dcc7dd5490d37269bde9e4))
+
 ## [1.0.7](https://github.com/climatepolicyradar/infra/compare/v1.0.6...v1.0.7) (2026-03-10)
 
 
