@@ -5,8 +5,12 @@ import pulumi
 import pulumi_aws as aws
 
 
-# These are required by Pulumis package registry, so we just create empty ones
 class RepositoryArgs(TypedDict):
+    """Required by Pulumi's package registry.
+
+    We just create an empty class to satisfy the requirement.
+    """
+
     pass
 
 
@@ -22,7 +26,6 @@ class Repository(pulumi.ComponentResource):
     ):
         super().__init__("components:aws/ecr/repository:Repository", name, None, opts)
 
-        """repository"""
         aws_ecr_repository_args = aws_ecr_repository_args or aws.ecr.RepositoryArgs(
             name=name,
         )
@@ -33,7 +36,6 @@ class Repository(pulumi.ComponentResource):
             opts=pulumi.ResourceOptions(parent=self),
         )
 
-        """lifecycle policy"""
         aws_ecr_lifecycle_policy_policy = aws_ecr_lifecycle_policy_policy or json.dumps(
             {
                 "rules": [

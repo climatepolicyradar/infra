@@ -1,0 +1,33 @@
+version: 2
+updates:
+  - package-ecosystem: github-actions
+    commit-message:
+      prefix: feat
+      include: scope
+    directory: /
+    schedule:
+      interval: weekly
+    groups:
+      all:
+        applies-to: version-updates
+        patterns:
+          - "*"
+        update-types:
+          - minor
+          - patch
+
+  - package-ecosystem: pip
+    commit-message:
+      prefix: feat
+      include: scope
+    directory: /
+    schedule:
+      interval: weekly
+    groups:
+      all:
+        applies-to: version-updates
+        patterns:
+          - "*"
+        update-types:
+          - minor
+          - patch
