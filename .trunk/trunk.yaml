@@ -24,7 +24,7 @@ lint:
           run: bandit --exit-zero -c bandit.yaml --format json --output ${tmpfile} ${target}
 
   ignore:
-    - linters: [markdownlint]
+    - linters: [ALL]
       paths:
         - CHANGELOG.md
   enabled:
