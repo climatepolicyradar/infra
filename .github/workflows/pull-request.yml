@@ -44,7 +44,7 @@ jobs:
     steps:
       - uses: actions/checkout@v6
       - uses: astral-sh/setup-uv@v7
-      - uses: extractions/setup-just@v3
+      - uses: extractions/setup-just@v4
       - name: Sync workspace (incl. dev deps)
         working-directory: .
         run: uv sync --project ${{ matrix.working-directory }} --group dev
