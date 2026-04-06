@@ -20,7 +20,7 @@ jobs:
     steps:
       - uses: actions/checkout@v6
       - uses: astral-sh/setup-uv@v7
-      - uses: extractions/setup-just@v3
+      - uses: extractions/setup-just@v4
       - run: just test
   release:
     runs-on: ubuntu-latest
