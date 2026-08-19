@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.1](https://github.com/climatepolicyradar/infra/compare/v1.1.0...v1.1.1) (2026-08-19)
+
+
+### Bug Fixes
+
+* **components:** bump version to match v1.1.0 release tag ([#35](https://github.com/climatepolicyradar/infra/issues/35)) ([521baf1](https://github.com/climatepolicyradar/infra/commit/521baf13a038b5009c7c7733161bf9f772b35a61))
+
 ## [1.1.0](https://github.com/climatepolicyradar/infra/compare/v1.0.7...v1.1.0) (2026-04-02)
 
 
