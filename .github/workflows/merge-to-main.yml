@@ -26,7 +26,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: test
     steps:
-      - uses: googleapis/release-please-action@v4
+      - uses: googleapis/release-please-action@v5
         with:
           token: ${{ secrets.INFRA_REPO_TOKEN }}
           release-type: python
