@@ -1,5 +1,15 @@
 # Changelog
 
+## [1.3.0](https://github.com/climatepolicyradar/infra/compare/v1.2.1...v1.3.0) (2026-10-21)
+
+
+### Features
+
+* **deps-dev:** update uv requirement from &gt;=0.9.2 to &gt;=0.11.6 ([#31](https://github.com/climatepolicyradar/infra/issues/31)) ([4ce71a7](https://github.com/climatepolicyradar/infra/commit/4ce71a7bcd73ce0d6b3499c59aee2a8148ffbf4f))
+* **deps:** bump actions/checkout from 6 to 7 ([#33](https://github.com/climatepolicyradar/infra/issues/33)) ([fa4bc74](https://github.com/climatepolicyradar/infra/commit/fa4bc7411faee4651e07436f15ca36932958f1ad))
+* **deps:** bump extractions/setup-just from 3 to 4 ([#30](https://github.com/climatepolicyradar/infra/issues/30)) ([2fcddce](https://github.com/climatepolicyradar/infra/commit/2fcddced8a169d17f62653a872dc7bf08db30425))
+* **deps:** bump googleapis/release-please-action from 4 to 5 ([#32](https://github.com/climatepolicyradar/infra/issues/32)) ([b15760e](https://github.com/climatepolicyradar/infra/commit/b15760e919f7822f16154ae62f8879c4cc494620))
+
 ## [1.1.0](https://github.com/climatepolicyradar/infra/compare/v1.0.7...v1.1.0) (2026-04-02)
 
 
