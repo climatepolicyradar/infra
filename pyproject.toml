@@ -8,4 +8,4 @@ dependencies = []
 dev = ["pre-commit>=4.5.1", "uv>=0.11.6"]
 
 [tool.uv.workspace]
-members = ["components"]
+members = ["components", "policies"]
