@@ -1,0 +1,5 @@
+# The sign-in Lambda bundle (build.py). Keep in step with the dev group in components/pyproject.toml.
+cffi==2.1.1
+cryptography==50.0.2
+pycparser==3.12
+pyjwt==2.15.1

@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex" />
+    <title>Sign in · ${site_title}</title>
+    <script>
+      // CloudFront serves this page for every request without valid sign-in cookies (custom 403).
+      // Send people straight to sign-in, back to the page they asked for, before anything is drawn.
+      // If we were here moments ago, sign-in is not sticking: stop and show the page rather than loop.
+      (function () {
+        var target =
+          "/_auth/login?rd=" +
+          encodeURIComponent(
+            location.pathname + location.search + location.hash,
+          );
+        var root = document.documentElement;
+        root.setAttribute("data-signin", target);
+        try {
+          var last = Number(sessionStorage.getItem(${storage_key})) || 0;
+          sessionStorage.setItem(${storage_key}, String(Date.now()));
+          if (Date.now() - last < 30000) {
+            root.className = "stuck";
+            return;
+          }
+        } catch (e) {
+          return;
+        }
+        root.className = "redirecting";
+        location.replace(target);
+      })();
+    </script>
+    <style>
+      body {
+        font-family: system-ui, sans-serif;
+        max-width: 32rem;
+        margin: 4rem auto;
+        padding: 0 1rem;
+        line-height: 1.5;
+        color: #1a1a1a;
+        background: #fff;
+      }
+      @media (prefers-color-scheme: dark) {
+        body {
+          color: #eee;
+          background: #161616;
+        }
+        a {
+          color: #8ab4ff;
+        }
+      }
+      .redirecting body {
+        visibility: hidden;
+      }
+      #note {
+        display: none;
+      }
+      .stuck #note {
+        display: block;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Sign in</h1>
+    <p>${site_title} is for people with a ${allowed_hd} Google account.</p>
+    <p><a id="signin" href="/_auth/login">Sign in with Google</a></p>
+    <p id="note">
+      Signing in did not stick. Check that your browser allows cookies for this
+      site, then sign in again.
+    </p>
+    <script>
+      // Without the redirect (no storage, or stuck), the link still returns to the asked-for page.
+      document.getElementById("signin").href =
+        document.documentElement.getAttribute("data-signin");
+    </script>
+  </body>
+</html>
